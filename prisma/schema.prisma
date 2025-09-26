@@ -29,6 +29,8 @@ model User {
   updatedAt     DateTime  @default(now()) @updatedAt
   sessions      Session[]
   accounts      Account[]
+  projects      Project[]
+  credits      Int       @default(100)
 
   @@unique([email])
   @@map("user")
@@ -77,4 +79,17 @@ model Verification {
   updatedAt  DateTime @default(now()) @updatedAt
 
   @@map("verification")
+}
+
+model Project{
+    id          Int      @id @default(autoincrement())
+    name        String
+    imgurl      String?
+    imagekitId  String?
+    userId      String
+    user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+    
+    @@index([name])
 }
